@@ -1,11 +1,10 @@
-// This file will call ECS SDK APIs 
+// Objective: That's the only file connect this app with AWS Service SDK. Get info about the ECS Service running in defined cluster. 
 const {ListServicesCommand, DescribeServicesCommand} = require("@aws-sdk/client-ecs");
 const {ecsClient} = require('../config/aws');
 
 async function listServices(cluster) {
   const command = new ListServicesCommand({ cluster });
   const response = await ecsClient.send(command);
-
   return response;
 }
 
