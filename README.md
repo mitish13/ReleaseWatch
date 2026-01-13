@@ -78,23 +78,32 @@ Answering these questions in the AWS Console requires multiple clicks and manual
 ## 📡 API Endpoints
 
 ### Health Check
-GET /health
-Returns a basic liveness response for infrastructure checks.
+**GET** `/health` 
+- Returns a basic liveness response for infrastructure checks.
 
 ### Services Overview
-GET /ecsServices
+**GET** `/ecsServices`
 
-Example response:
+- Example response:
 ```json
 [
-  {
-    "serviceName": "codebook-backend-service",
-    "desiredCount": 2,
-    "runningCount": 1,
-    "pendingCount": 0,
-    "healthStatus": "DEGRADED",
-    "deploymentStatus": "DEPLOYING"
-  }
+    {
+        "serviceName": "codebook-backend-service",
+        "desiredCount": 0,
+        "runningCount": 0,
+        "pendingCount": 0,
+        "healthStatus": "HEALTHY",
+        "deploymentStatus": "STABLE",
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "rolloutState": "COMPLETED",
+                "runningCount": 0,
+                "desiredCount": 0,
+                "createdAt": "2026-01-12T23:32:00.369Z"
+            }
+        ]
+    }
 ]
 ```
 ## Local Development
