@@ -7,9 +7,9 @@ const { computeDeploymentStatus} = require('../utils/deploymentStatus.util')
 const CLUSTER_NAME = process.env.AWS_ECS_CLUSTER_NAME;
 
 async function getEcsServicesHealth() {
-  const {serviceArns} = await listServices(CLUSTER_NAME);
-
-  if (!Array.isArray(serviceArns)) {
+  const serviceList = await listServices(CLUSTER_NAME);
+  const {serviceArns} = serviceList;
+  if (serviceArns.length==0) {
     throw new Error("ECS listServices did not return an array");
   }
 
@@ -17,6 +17,8 @@ async function getEcsServicesHealth() {
 
   for (const serviceArn of serviceArns) {
     const service = await describeService(CLUSTER_NAME, serviceArn);
+    console.log("Service Description");
+    console.log(service)
     const health = computeHealthStatus(service);
     const deploymentStatus = computeDeploymentStatus(service.deployments)
     results.push({
@@ -30,8 +32,9 @@ async function getEcsServicesHealth() {
         rolloutState: d.rolloutState,
         runningCount: d.runningCount,
         desiredCount: d.desiredCount,
-        createdAt: d.createdAt
-        }))
+        createdAt: d.createdAt,
+        })),
+        createdBy:service.createdBy
     });
   }
 
