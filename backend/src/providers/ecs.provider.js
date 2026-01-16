@@ -1,5 +1,5 @@
 // Objective: That's the only file connect this app with AWS Service SDK. Get info about the ECS Service running in defined cluster. 
-const {ListServicesCommand, DescribeServicesCommand} = require("@aws-sdk/client-ecs");
+const {ListServicesCommand, DescribeServicesCommand, ListTasksCommand} = require("@aws-sdk/client-ecs");
 const {ecsClient} = require('../config/aws');
 
 async function listServices(cluster) {
@@ -17,6 +17,9 @@ async function describeService(cluster, serviceArn) {
   const response = await ecsClient.send(command);
   return response.services[0];
 }
+
+// TODO: Container health check 
+
 
 module.exports = {
   listServices,

@@ -1,7 +1,8 @@
 const express = require('express');
 const cors=require('cors');
 const healthRoute = require('./routes/health.routes')
-const ecsServiceHealth = require('./routes/ecsServiceHealth.routes')
+const ecsServiceHealth = require('./routes/ecsServiceHealth.routes');
+const registerDeployment = require('./routes/registerDeployment.routes')
 const app = express();
 
 // Middleware
@@ -11,5 +12,6 @@ app.use(express.json()) // To parse incoming JSON requests; without this, req.bo
 // API running marker route
 app.use('/health', healthRoute);
 app.use('/ecsServices',ecsServiceHealth)
+app.use('/registerDeployment', registerDeployment)
 
 module.exports = app;
